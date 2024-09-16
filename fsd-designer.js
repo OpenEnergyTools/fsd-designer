@@ -18347,7 +18347,7 @@ let FunctionEditor9030 = class FunctionEditor9030 extends s$3 {
     }
     renderLNodeDetail() {
         if (this.lNodeForDetail)
-            return x `<div class="container lnode detail">
+            return x `<div class="table lnode detail">
         <nav style="float:right;">
           <mwc-icon-button
             icon="close"
@@ -18397,7 +18397,7 @@ let FunctionEditor9030 = class FunctionEditor9030 extends s$3 {
     renderSourceRef(lNode) {
         return x `${Array.from(lNode.querySelectorAll(':scope > Private[type="eIEC61850-6-100"] SourceRef')).map(srcRef => {
             const source = srcRef.getAttribute('source');
-            const baseLength = 2 + parentDepth(lNode) * 22;
+            const baseLength = 0 + parentDepth(lNode) * 20;
             const growth = this.inputs.findIndex(input => input.source === source) * 9;
             const left = this.inputs.length * 9 + baseLength - growth;
             return source
@@ -18407,7 +18407,7 @@ let FunctionEditor9030 = class FunctionEditor9030 extends s$3 {
             style="position:relative;left:-${left}px;"
           >
             <div
-              style="height:3px;margin:5px;background-color:#002b36;border-radius:2px;width:${left}px;"
+              style="height:3px;margin:5px;border-radius:2px;width:${left}px;"
               class="${o$2({
                     link: true,
                     srcref: true,
@@ -18422,7 +18422,7 @@ let FunctionEditor9030 = class FunctionEditor9030 extends s$3 {
             style="position:relative;left:-25px;"
           >
             <div
-              style="height:3px;margin:5px;background-color:#002b36;border-radius:2px;width:25px;"
+              style="height:3px;margin:5px;border-radius:2px;width:25px;"
               class="${o$2({
                     link: true,
                     srcref: true,
@@ -18440,7 +18440,7 @@ let FunctionEditor9030 = class FunctionEditor9030 extends s$3 {
             .filter(ctrlRef => ctrlRef.getAttribute('controlled'))
             .map(ctrlRef => {
             const controlled = ctrlRef.getAttribute('controlled');
-            const baseLength = 7 + parentDepth(lNode) * 22;
+            const baseLength = 5 + parentDepth(lNode) * 20;
             const growth = this.outputs.findIndex(output => output.controlled === controlled) *
                 9;
             const left = baseLength + growth;
@@ -18640,7 +18640,7 @@ FunctionEditor9030.styles = i$6 `
 
     h1,
     h3 {
-      color: var(--mdc-theme-on-surface);
+      color: var(--fedit-text-color);
       font-family: 'Roboto', sans-serif;
       font-weight: 300;
       overflow: hidden;
@@ -18649,7 +18649,6 @@ FunctionEditor9030.styles = i$6 `
       margin: 0px;
       line-height: 48px;
       padding-left: 0.3em;
-      transition: background-color 150ms linear;
     }
 
     mwc-icon-button {
@@ -18658,41 +18657,91 @@ FunctionEditor9030.styles = i$6 `
 
     .container {
       border-radius: 10px;
-      border: 2px solid #002b36;
       margin: 10px;
       padding: 10px;
       position: relative;
     }
 
-    .container.allfunc {
-      min-width: 200px;
-      background-color: #fdf6e3;
-    }
-
     .container.func {
-      background-color: #eee8d5;
-    }
-
-    .container.subfunc {
-      background-color: #eee8d5;
-    }
-
-    .container.func.detail {
-      background-color: #fdf6e3;
+      background-color: var(--fedit-func-color);
       flex: auto;
     }
 
-    .container.lnode {
-      background-color: #fdf6e3;
+    .container.subfunc {
+      background-color: var(--fedit-subfunc-color);
     }
 
-    .container.unmapped {
-      background: orange;
-      opacity: 1;
+    .container.lnode {
+      background-color: var(--fedit-lnode-color);
     }
 
     .container.selected {
-      background-color: #268bd2;
+      background-color: var(--fedit-selected-color);
+      color: var(--fedit-selected-text-color);
+    }
+
+    .link {
+      background-color: var(--fedit-link-color);
+    }
+
+    .link.input {
+      width: 4px;
+      margin: 2.5px;
+      border-radius: 3px;
+      height: 100%;
+    }
+
+    .table.lnode.detail {
+      width: auto;
+      min-width: 300px;
+      max-width: calc(100% - 50px);
+      max-height: 500px;
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      overflow: scroll;
+      border-radius: 10px;
+      background-color: var(--fedit-detail-base2);
+      padding: 10px;
+    }
+
+    thead tr {
+      background-color: var(--fedit-detail-base1);
+    }
+
+    thead th {
+      font-weight: 500;
+    }
+
+    tbody th {
+      font-weight: 300;
+    }
+
+    tbody tr:nth-child(odd) {
+      background-color: var(--fedit-detail-base2);
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: var(--fedit-detail-base1);
+    }
+
+    nav {
+      float: right;
+    }
+
+    .lnode.tab {
+      flex: auto;
+      text-align: center;
+      border-radius: 5px;
+    }
+
+    .lnode.tab.selected {
+      background-color: var(--fedit-selected-color);
+      color: var(--oscd-base2);
+    }
+
+    .lnode.tab:hover {
+      background-color: var(--fedit-hover-color);
     }
 
     .content.prores {
@@ -18704,85 +18753,25 @@ FunctionEditor9030.styles = i$6 `
       margin: 8px 10px 16px;
     }
 
-    .link {
-      background-color: #002b36;
-    }
-
-    .link.selected {
-      background-color: #b58900;
-    }
-
-    .link.input {
-      width: 4px;
-      margin: 2.5px;
-      border-radius: 3px;
-      height: 100%;
-    }
-
-    .container.lnode.detail {
-      width: auto;
-      min-width: 300px;
-      max-height: 500px;
-      position: fixed;
-      right: 20px;
-      bottom: 20px;
-      overflow: scroll;
-      border: 2px black solid;
-      border-radius: 10px;
-    }
-
-    thead tr {
-      background-color: #93a1a1;
-    }
-
-    tbody tr:nth-child(odd) {
-      background-color: #fdf6e3;
-    }
-
-    tbody tr:nth-child(even) {
-      background-color: #eee8d5;
-    }
-
-    nav {
-      float: right;
-    }
-
-    .table {
-      background-color: white;
-    }
-
-    .lnode.tab {
-      flex: auto;
-      text-align: center;
-    }
-
-    .lnode.tab.selected {
-      background-color: grey;
-      opacity: 1;
-    }
-
-    .lnode.tab:hover {
-      background-color: grey;
-      opacity: 0.4;
-    }
-
-    .input.selectpane:hover {
-      background-color: orange;
-      opacity: 0.4;
-    }
-
     * {
-      --md-sys-color-primary: var(--oscd-primary);
-      --md-sys-color-secondary: var(--oscd-secondary);
-      --md-sys-typescale-body-large-font: var(--oscd-theme-text-font);
-      --md-outlined-text-field-input-text-color: var(--oscd-base01);
+      --mdc-theme-primary: var(--fedit-primary);
+      --mdc-theme-secondary: var(--fedit-secondary);
 
-      --md-sys-color-surface: var(--oscd-base3);
-      --md-sys-color-on-surface: var(--oscd-base00);
-      --md-sys-color-on-primary: var(--oscd-base2);
-      --md-sys-color-on-surface-variant: var(--oscd-base00);
-      --md-menu-container-color: var(--oscd-base3);
-      font-family: var(--oscd-theme-text-font);
+      --md-sys-color-primary: var(--fedit-primary);
+      --md-sys-color-secondary: var(--fedit-secondary);
+      --md-sys-typescale-body-large-font: var(
+        --oscd-theme-text-font,
+        'Roboto',
+        sans-serif
+      );
+      --md-outlined-text-field-input-text-color: var(--fedit-text-color);
+
+      --md-sys-color-surface: var(--fedit-surface);
+      --md-sys-color-on-surface: var(--fedit-text-color);
+      --md-sys-color-on-primary: var(--fedit-text-color);
+      --md-sys-color-on-surface-variant: var(--fedit-text-color);
+      --md-menu-container-color: var(--fedit-surface);
+      font-family: var(--oscd-theme-text-font, 'Roboto', sans-serif);
       --md-sys-color-surface-container-highest: var(--oscd-base2);
     }
   `;
@@ -18963,7 +18952,7 @@ SclBayTemplate.styles = i$6 `
     }
 
     h1 {
-      color: var(--mdc-theme-on-surface);
+      color: var(--oscd-base03);
       font-family: 'Roboto', sans-serif;
       font-weight: 300;
       overflow: hidden;
@@ -18976,18 +18965,20 @@ SclBayTemplate.styles = i$6 `
     }
 
     * {
-      --md-sys-color-primary: var(--oscd-primary);
-      --md-sys-color-secondary: var(--oscd-secondary);
-      --md-sys-typescale-body-large-font: var(--oscd-theme-text-font);
-      --md-outlined-text-field-input-text-color: var(--oscd-base01);
+      --fedit-primary: var(--oscd-primary);
+      --fedit-secondary: var(--oscd-secondary);
+      --fedit-surface: var(--oscd-base2);
 
-      --md-sys-color-surface: var(--oscd-base3);
-      --md-sys-color-on-surface: var(--oscd-base00);
-      --md-sys-color-on-primary: var(--oscd-base2);
-      --md-sys-color-on-surface-variant: var(--oscd-base00);
-      --md-menu-container-color: var(--oscd-base3);
-      font-family: var(--oscd-theme-text-font);
-      --md-sys-color-surface-container-highest: var(--oscd-base2);
+      --fedit-text-color: var(--oscd-base03);
+      --fedit-func-color: var(--oscd-base0);
+      --fedit-subfunc-color: var(--oscd-base00);
+      --fedit-lnode-color: var(--oscd-base01);
+      --fedit-selected-color: var(--oscd-base02);
+      --fedit-selected-text-color: var(--oscd-base2);
+      --fedit-link-color: var(--oscd-base03);
+      --fedit-detail-base1: var(--oscd-base2);
+      --fedit-detail-base2: var(--oscd-base3);
+      --fedit-hover-color: var(--oscd-base00);
     }
   `;
 __decorate([
