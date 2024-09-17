@@ -15484,7 +15484,7 @@ SelectionList = __decorate([
 ], SelectionList);
 
 /** Utility function to create element with `tagName` and its`attributes` */
-function createElement(doc, tag, attrs) {
+function createElement$1(doc, tag, attrs) {
     const element = doc.createElementNS(doc.documentElement.namespaceURI, tag);
     Object.entries(attrs)
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -16436,7 +16436,7 @@ function insertDataTypes(dataTypes, targetScl) {
     const dataTypeEdit = [];
     const targetDataTypeTemplates = targetScl.querySelector(":root > DataTypeTemplates")
         ? targetScl.querySelector(":root > DataTypeTemplates")
-        : createElement(targetScl.ownerDocument, "DataTypeTemplates", {});
+        : createElement$1(targetScl.ownerDocument, "DataTypeTemplates", {});
     if (!targetDataTypeTemplates.parentElement) {
         dataTypeEdit.push({
             parent: targetScl,
@@ -17463,7 +17463,7 @@ function createSingleLNode(parent, ln) {
     const lnInst = lnInstGenerator(parent, 'LNode')(lnClass);
     if (!lnInst)
         return [];
-    const node = createElement(parent.ownerDocument, 'LNode', {
+    const node = createElement$1(parent.ownerDocument, 'LNode', {
         iedName: 'None',
         lnClass,
         lnInst,
@@ -18703,6 +18703,15 @@ FunctionEditor9030.styles = i$6 `
       border-radius: 10px;
       background-color: var(--fedit-detail-base2);
       padding: 10px;
+      box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
+        0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.2);
+      outline-width: 4px;
+      transition: all 250ms linear;
+    }
+
+    .input.selectpane:hover {
+      opacity: 0.5;
+      background-color: var(--fedit-hover-color);
     }
 
     thead tr {
@@ -18887,6 +18896,14 @@ FunctionEditor9030 = __decorate([
     e$8('function-editor-90-30')
 ], FunctionEditor9030);
 
+function createElement(doc, tag, attrs) {
+    const element = doc.createElementNS(doc.documentElement.namespaceURI, tag);
+    Object.entries(attrs)
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        .filter(([_, value]) => value !== null)
+        .forEach(([name, value]) => element.setAttribute(name, value));
+    return element;
+}
 class SclBayTemplate extends s$3 {
     constructor() {
         super(...arguments);
@@ -18903,15 +18920,15 @@ class SclBayTemplate extends s$3 {
     createTemplate() {
         var _a;
         const scl = (_a = this.doc) === null || _a === void 0 ? void 0 : _a.querySelector('SCL');
-        if (!scl)
+        if (!this.doc || !scl)
             return;
-        const subsSt = this.doc.createElement('Substation');
+        const subsSt = createElement(this.doc, 'Substation', {});
         subsSt.setAttribute('name', 'TEMPLATES');
-        const voltLv = this.doc.createElement('VoltageLevel');
+        const voltLv = createElement(this.doc, 'VoltageLevel', {});
         voltLv.setAttribute('name', 'TEMPLATES');
-        const bay = this.doc.createElement('Bay');
+        const bay = createElement(this.doc, 'Bay', {});
         bay.setAttribute('name', 'TEMPLATES');
-        const func = this.doc.createElement('Function');
+        const func = createElement(this.doc, 'Function', {});
         func.setAttribute('name', 'FUNCTION');
         subsSt.appendChild(voltLv);
         voltLv.appendChild(bay);
@@ -18978,7 +18995,7 @@ SclBayTemplate.styles = i$6 `
       --fedit-link-color: var(--oscd-base03);
       --fedit-detail-base1: var(--oscd-base2);
       --fedit-detail-base2: var(--oscd-base3);
-      --fedit-hover-color: var(--oscd-base00);
+      --fedit-hover-color: var(--oscd-secondary);
     }
   `;
 __decorate([
@@ -18994,5 +19011,5 @@ __decorate([
     n$5({ attribute: false })
 ], SclBayTemplate.prototype, "substation", null);
 
-export { SclBayTemplate as default };
+export { createElement, SclBayTemplate as default };
 //# sourceMappingURL=fsd-designer.js.map
