@@ -18269,7 +18269,7 @@ let FunctionEditor9030 = class FunctionEditor9030 extends s$3 {
         if (!rscName)
             return x `<th></th>`;
         const nextRscNameIndex = nextRscName
-            ? srcRefs.indexOf(nextRscName) + 1
+            ? srcRefs.indexOf(nextRscName)
             : srcRefs.length;
         if (i === 0) {
             return x `<th rowspan="${nextRscNameIndex || '1'}">
