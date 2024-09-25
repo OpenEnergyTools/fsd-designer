@@ -36,7 +36,7 @@ export default class FunctionEditor9030 extends LitElement {
     lNodeForCalculation?: Element;
     lnodeparent?: Element;
     selectedSourceRef?: Element;
-    selectedResourceName?: Element;
+    toBeUpdatedSrcRefs?: Element[];
     sldWidth: number;
     selectedLibName?: string;
     inputs: Input[];
@@ -44,6 +44,7 @@ export default class FunctionEditor9030 extends LitElement {
     isControlRef: boolean;
     isSrcRefUpdate: boolean;
     linkProcRes: boolean;
+    lnClass?: string;
     lNodeDetail: 'inputs' | 'outputs' | 'settings';
     items: SelectItem[];
     dialog: Dialog;
@@ -82,6 +83,7 @@ export default class FunctionEditor9030 extends LitElement {
     private renderExtRefPicker;
     private renderLibraryImport;
     private renderLNodeTypePicker;
+    private renderProcResSelector;
     private renderLNodeDetailContent;
     private renderLNodeDetail;
     private renderSourceRef;
